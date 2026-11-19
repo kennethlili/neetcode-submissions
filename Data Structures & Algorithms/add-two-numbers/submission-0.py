@@ -1,0 +1,51 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+"""
+two singly linked list, l1 and l2
+    can only proceed forward
+    they are in reverse order
+    each node contains only single digit(0-9)
+    non empty -> 1 <= l1.length, l2.length <= 100
+return the sum of the two number as a linked list (also in reverse order)
+"""
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        def reverseList(lis):
+            prev = None
+            while lis:
+                nxt = lis.next
+                lis.next = prev
+                prev = lis
+                lis = nxt
+            return prev
+        ref = curr = ListNode(0)
+        # l1 = reverseList(l1)
+        # l2 = reverseList(l2)
+        carry = False
+        while l1 or l2:
+            val1 = l1.val if l1 else 0
+            val2 = l2.val if l2 else 0
+            print(val1,val2)
+            val = val1 + val2
+            if carry:
+                val = val + 1
+            carry = val >= 10
+            if carry:
+                val = val - 10
+            curr.next = ListNode(val)
+            curr = curr.next
+            if l1:l1 = l1.next
+            if l2:l2 = l2.next
+        if carry:
+            curr.next = ListNode(1)
+            curr = curr.next
+        
+        # return reverseList(ref.next)
+        return ref.next
+
+        
+
